@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topContainer {
+  background-color: #e4000f;
+  height: 50vh;
+  width: 100%;
+  border-bottom: 3px solid black;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  transition: 1s;
+}
+
+.middleContainer {
+  position: relative;
+  bottom: -2.7rem;
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  border: 6px solid black;
+  background-color: white;
+}
+
+.bottomContainer {
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  height: 50vh;
+  width: 100%;
+  border-top: 3px solid black;
+  z-index: 9;
+  transition: 1s;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20rem;
+}
+
+.animateTop {
+  height: 15rem;
+}
+
+.animateBottom {
+  height: 0;
+}
