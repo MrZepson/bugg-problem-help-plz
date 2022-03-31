@@ -15,30 +15,17 @@ const GenOne = () => {
   const [pokeApi, setPokeApi] = useState([]);
   const [from, setFrom] = useState(0);
 
-  useEffect(() => fetchPokeApi(from), []);
+  useEffect(() => fetchPokeApi(), []);
+  useEffect(() => fetchPokeApi(), [from]);
 
-  useEffect(() => updateStorage, [from]);
-
-  const savedData = JSON.parse(localStorage.getItem("api")) || [];
-  localStorage.setItem("api", JSON.stringify(pokeApi));
-
-  function updateStorage() {
-    fetchPokeApi(from);
-    let savedData1 = JSON.parse(localStorage.getItem("api"));
-    const newPokemons = pokeApi;
-    console.log(pokeApi);
-    let p = [...newPokemons, ...savedData1];
-    console.log(p);
-    localStorage.setItem("api", JSON.stringify(p));
-  }
-
-  async function fetchPokeApi(from) {
+  async function fetchPokeApi() {
     try {
       const res = await fetch(
         `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${from}`
       );
       const data = await res.json();
-      setPokeApi(data.results);
+      console.log(data.results);
+      pokeApi.length > 0 ? setPokeApi(pokeApi => [...pokeApi, ...data.results]) : setPokeApi(data.results);
     } catch (err) {
       console.log(
         "Cound not fetch the pokemonlist. Try again in a few minutes."
@@ -48,11 +35,12 @@ const GenOne = () => {
 
   return (
     <section>
-      {savedData.map((poke, i) => (
+      {pokeApi.map((poke, i) => (
         <Pokemon
+          url={poke.url}
           key={i}
-          img={images[`${i + 1}.png`]}
           name={poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}
+          img={images[`${i + 1}.png`]}
           id={i + 1}
         />
       ))}
